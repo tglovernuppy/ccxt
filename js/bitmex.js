@@ -474,6 +474,11 @@ module.exports = class bitmex extends Exchange {
                 throw new OrderNotFound (this.id + ' cancelOrder() failed: ' + error);
         return this.parseOrder (order);
     }
+    
+    async cancelOrderAll (symbol = undefined, params = {}) {
+        await this.loadMarkets ();
+        await this.privateDeleteOrderAll (params);
+    }
 
     isFiat (currency) {
         if (currency === 'EUR')
